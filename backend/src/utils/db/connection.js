@@ -1,13 +1,15 @@
-// get the client
-const mysql = require('mysql2');
+const mysql = require('mysql');
 
-// create the connection to database
-const connection = mysql.createConnection({
-	host: 'localhost',
-	port: '3306',
-	user: 'root',
-	password: 'root',
-	database: 'crud-estabelecimentos',
+const host = process.env.DB_HOST;
+const port = process.env.DB_PORT;
+const user = process.env.DB_USER;
+const password = process.env.DB_PASSWORD;
+const database = process.env.DB_SCHEMA;
+
+const connection = mysql.createConnection({ host, port, user, password, database });
+
+connection.connect(error => {
+	if (error) throw error;
 });
- 
+
 module.exports = connection;
