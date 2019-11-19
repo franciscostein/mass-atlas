@@ -1,0 +1,31 @@
+{
+	"name": "crud-estabelecimentos-api",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node src/index.js",
+		"dev": "env-cmd ./src/config/env/dev.env nodemon src/index.js",
+		"test": "env-cmd ./src/config/env/test.env jest --watch --runInBand"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/leandro94costa/crud-estabelecimentos.git"
+	},
+	"author": "Leandro Costa",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/leandro94costa/crud-estabelecimentos/issues"
+	},
+	"homepage": "https://github.com/leandro94costa/crud-estabelecimentos#readme",
+	"dependencies": {
+		"express": "^4.17.1",
+		"mysql2": "^2.0.0"
+	},
+	"devDependencies": {
+		"env-cmd": "^10.0.1",
+		"jest": "^24.9.0",
+		"nodemon": "^1.19.4",
+		"supertest": "^4.0.2"
+	}
+}
