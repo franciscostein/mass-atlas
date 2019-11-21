@@ -1,5 +1,5 @@
 const express = require('express');
-const estabelecimentoRouter = require('./controller/routes/estabelecimento');
+const estabelecimentoRouter = require('./routes/estabelecimento');
 
 const app = express();
 
