@@ -10,6 +10,10 @@ const insert = async (data, result) => {
         estabelecimento.create((error, insertedId) => {
             if (error) {
                 if (error.errno === 1062) {
+
+                    // Validação de campos repetidos, separar metodo
+                    throw new Error();
+
                     result(400, 'Razão Social ou CNPJ já existem no banco de dados', ['razao_social', 'cnpj'], null);
                 } else {
                     result(500, 'Erro ao inserir registro', null, null);
