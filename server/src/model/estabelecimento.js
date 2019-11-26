@@ -17,7 +17,7 @@ class Estabelecimento {
             this.telefone = telefone;
             this.data_cadastro = new Date(data_cadastro);
             this.categoria = categoria;
-            this.status = status;
+            this.status = status || 0;
             this.agencia = agencia;
             this.conta = conta;
         }
@@ -58,7 +58,7 @@ class Estabelecimento {
             if (error) {
                 callback(error, null);
             } else {
-                callback(null, result[0]);
+                callback(null, result);
             }
         });
     }

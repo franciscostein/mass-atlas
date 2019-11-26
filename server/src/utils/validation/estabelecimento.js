@@ -1,6 +1,6 @@
-//  Backend validation
+//  Backend API validation
 
-const preInsert = estabelecimento => {
+const preSave = estabelecimento => {
     const { razao_social, nome_fantasia, cnpj, email, endereco, cidade, estado, telefone, data_cadastro, categoria, status, agencia, conta } = estabelecimento;
     let validation = {
         code: 200,
@@ -93,4 +93,4 @@ const preInsert = estabelecimento => {
     return validation;
 }
 
-module.exports.preInsert = preInsert;
+module.exports.preSave = preSave;

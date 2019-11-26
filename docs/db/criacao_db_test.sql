@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `crud-estabelecimentos-test`.`estabelecimentos` (
   `telefone` VARCHAR(11) NULL DEFAULT NULL,
   `data_cadastro` DATETIME NULL DEFAULT NULL,
   `categoria` INT(11) NULL DEFAULT NULL,
-  `status` TINYINT(4) NULL DEFAULT NULL,
+  `status` BIT(1) NOT NULL DEFAULT 0,
   `agencia` VARCHAR(4) NULL DEFAULT NULL,
   `conta` VARCHAR(6) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
