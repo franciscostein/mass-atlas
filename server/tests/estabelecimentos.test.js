@@ -99,7 +99,7 @@ test('Buscar todos os registros', async () => {
 });
 
 test('Atualizar registro', async () => {
-    const response = await request(app)
+    await request(app)
         .patch(`/estabelecimentos/${insertedId}`)
         .send({
             razao_social: 'Heloise e Renato Locações de Automóveis Ltda',
@@ -118,13 +118,8 @@ test('Atualizar registro', async () => {
         })
         .expect(200);
 
-    // console.log('insertedId:', insertedId);
-
+    const response = await request(app).get(`/estabelecimentos/${insertedId}`).expect(200);
     const estabelecimento = response.body;
-
-    console.log(estabelecimento);
-
-    // console.log('estabelecimento.id:', estabelecimento.id);
 
     expect(estabelecimento.id).toBe(insertedId);
     expect(estabelecimento.razao_social).toEqual('Heloise e Renato Locações de Automóveis Ltda');
@@ -145,6 +140,10 @@ test('Atualizar registro', async () => {
 test('Não atualizar registro com valores inválidos', async () => {
     
 });
+
+test('Não atualizar registro com valores repetidos', async () => {
+
+});    
 
 test('Excluír registro', async () => {
 

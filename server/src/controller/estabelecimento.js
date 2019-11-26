@@ -10,7 +10,7 @@ const insert = async (data, result) => {
         estabelecimento.create((error, insertedId) => {
             if (error) {
                 if (error.errno === 1062) {
-                    result(400, 'Registro já existe no banco de dados', null, null);
+                    result(400, 'Razão Social ou CNPJ já existem no banco de dados', ['razao_social', 'cnpj'], null);
                 } else {
                     result(500, 'Erro ao inserir registro', null, null);
                 }
@@ -64,10 +64,26 @@ const update = async (_id, data, result) => {
 
         estabelecimento.update(_id, (error, res) => {
             if (error) {
-                result(500, 'Erro ao atualizar registro', null, null);
+                if (error.errno === 1062) {
+                    let repeatedField = '';
+                    let msg = '';
+
+                    // UNIQUE Index throws at the first repeated field
+                    if (error.sqlMessage.includes('razao_social_UNIQUE')) {
+                        repeatedField = 'razao_social';  
+                        msg = `Razão Social: ${estabelecimento.razao_social} já existe no banco de dados`;
+                    } 
+                    if (error.sqlMessage.includes('cnpj_UNIQUE')) {
+                        repeatedField = 'cnpj';
+                        msg = `CPNJ: ${estabelecimento.cnpj} já existe no banco de dados`;
+                    } 
+                    result(400, msg, repeatedField, null);
+
+                } else {
+                    result(500, 'Erro ao atualizar registro', null, null);
+                }
             } else {
-                console.log(res);
-                result(200, null, null, res);
+                result(200, null, null, estabelecimento);
             }
         });
     } else {
