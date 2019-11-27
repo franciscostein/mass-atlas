@@ -1,0 +1,3 @@
+.content { /* footer sticker, 100%vh - (75px footer h + 35px footer marginTop + 105px headerBar h) */
+	min-height: calc(100vh - 215px);
+}

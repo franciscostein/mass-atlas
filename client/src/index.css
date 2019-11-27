@@ -1,0 +1,24 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: Roboto, Arial, sans-serif;
+	color: #555;
+	font-weight: 300;
+	font-size: 20px;
+	text-rendering: optimizeLegibility;
+
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.content { /* footer sticker, 100%vh - (75px footer h + 35px footer marginTop + 105px headerBar h) */
+	min-height: calc(100vh - 215px);
+}

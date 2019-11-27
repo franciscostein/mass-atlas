@@ -1,0 +1,31 @@
+import React from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
+import Header from './layouts/Header';
+import Footer from './layouts/Footer';
+import Estabelecimentos from './components/Establecimentos/Estabelecimentos';
+import Estabelecimento from './components/Establecimentos/Estabelecimento/Estabelecimento';
+
+function App() {
+	return (
+		<BrowserRouter>
+			<Header />
+			<div className="content">
+				<Switch>
+					<Route path="/estabelecimento/:id?">
+						<Estabelecimento />
+					</Route>
+					<Route path="/estabelecimentos">
+						<Estabelecimentos />
+					</Route>
+					<Route path="/">
+						<h1>Página não encontrada</h1>
+					</Route>
+				</Switch>
+			</div>
+			<Footer />
+		</BrowserRouter>
+	);
+}
+
+export default App;
