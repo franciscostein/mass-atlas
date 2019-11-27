@@ -2,28 +2,26 @@ const Estabelecimento = require('../model/estabelecimento');
 const validation = require('../utils/validation/estabelecimento');
 
 const insert = async (data, result) => {
-    const { code, message, fields } = validation.preSave(data);
+    const { code, error } = validation.preSave(data);
 
     if (code === 200) {
         const estabelecimento = new Estabelecimento(data);
 
-        estabelecimento.create((error, insertedId) => {
-            if (error) {
-                if (error.errno === 1062) {
+        estabelecimento.create((err, insertedId) => {
+            if (err) {
+                if (err.errno === 1062) {
+                    const uniqueValidationRes = validation.uniqueIndexFields(err.sqlMessage, estabelecimento);
 
-                    // Validação de campos repetidos, separar metodo
-                    throw new Error();
-
-                    result(400, 'Razão Social ou CNPJ já existem no banco de dados', ['razao_social', 'cnpj'], null);
+                    result(400, uniqueValidationRes, null);
                 } else {
-                    result(500, 'Erro ao inserir registro', null, null);
+                    result(500, err, null);
                 }
             } else {
-                result(201, null, null, insertedId);
+                result(201, null, insertedId);
             }
         });
     } else {
-        result(code, message, fields, null);
+        result(code, error, null);
     }
 }
 
@@ -61,37 +59,26 @@ const getMany = async result => {
 }
 
 const update = async (_id, data, result) => {
-    const { code, message, fields } = validation.preSave(data);
+    const { code, error } = validation.preSave(data);
 
     if (code === 200) {
         const estabelecimento = new Estabelecimento(data);
 
-        estabelecimento.update(_id, (error, res) => {
-            if (error) {
-                if (error.errno === 1062) {
-                    let repeatedField = '';
-                    let msg = '';
+        estabelecimento.update(_id, (err, res) => {
+            if (err) {
+                if (err.errno === 1062) {
+                    const uniqueValidationRes = validation.uniqueIndexFields(err.sqlMessage, estabelecimento);
 
-                    // UNIQUE Index throws at the first repeated field
-                    if (error.sqlMessage.includes('razao_social_UNIQUE')) {
-                        repeatedField = 'razao_social';  
-                        msg = `Razão Social: ${estabelecimento.razao_social} já existe no banco de dados`;
-                    } 
-                    if (error.sqlMessage.includes('cnpj_UNIQUE')) {
-                        repeatedField = 'cnpj';
-                        msg = `CPNJ: ${estabelecimento.cnpj} já existe no banco de dados`;
-                    } 
-                    result(400, msg, repeatedField, null);
-
+                    result(400, uniqueValidationRes, null);
                 } else {
-                    result(500, 'Erro ao atualizar registro', null, null);
+                    result(500, 'Erro ao atualizar registro', null);
                 }
             } else {
-                result(200, null, null, estabelecimento);
+                result(200, null, estabelecimento);
             }
         });
     } else {
-        result(code, message, fields, null);
+        result(code, error, null);
     }
 }
 

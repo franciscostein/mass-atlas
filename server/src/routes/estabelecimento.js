@@ -3,12 +3,12 @@ const router = require('express').Router();
 
 // Create
 router.post('/estabelecimentos', async (req, res) => {
-    await controller.insert(req.body, (code, message, fields, insertedId) => {
+    await controller.insert(req.body, (code, error, insertedId) => {
 
         if (insertedId) {
             return res.status(code).send({ insertedId });
         }
-        return res.status(code).send({ message, fields });
+        return res.status(code).send(error);
     });
 });
 
@@ -39,12 +39,12 @@ router.get('/estabelecimentos', async (req, res) => {
 router.patch('/estabelecimentos/:id', async (req, res) => {
     const _id = req.params.id;
 
-    await controller.update(_id, req.body, (code, message, fields, response) => {
+    await controller.update(_id, req.body, (code, error, response) => {
 
         if (code === 200) {
-            return res.status(code).send(response);
+            return res.status(code).send({ response });
         }
-        return res.status(code).send({ message, fields });
+        return res.status(code).send(error);
     });
 });
 

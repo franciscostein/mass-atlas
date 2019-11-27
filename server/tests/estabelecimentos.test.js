@@ -85,7 +85,7 @@ test('Inserir novo estabelecimento apenas com campos obrigatórios', async () =>
         .post('/estabelecimentos')
         .send({
             razao_social: 'Geraldo e Antonio Ferragens ME',
-            cnpj: '61193843000146',
+            cnpj: '61193843000146'
         })
         .expect(201);
 
@@ -96,6 +96,33 @@ test('Buscar todos os registros', async () => {
     const response = await request(app).get('/estabelecimentos').expect(200);
 
     expect(response.body.length).toBe(2);
+});
+
+test('Não atualizar com valores duplicados', async () => {
+    let response = await request(app)
+        .patch(`/estabelecimentos/${insertedId}`)
+        .send({
+            razao_social: 'Geraldo e Antonio Ferragens ME',
+            cnpj: '97587089000176'  // CNPJ novo para não dar erro NOT NULL
+        })
+        .expect(400);
+        
+    expect(response.body.field).toBe('razao_social');
+
+    response = await request(app)
+        .patch(`/estabelecimentos/${insertedId}`)
+        .send({
+            cnpj: '61193843000146',
+            razao_social: 'foo'
+        })
+        .expect(400);
+
+    expect(response.body.field).toBe('cnpj');        
+});
+
+
+test('Não atualizar com valores inválidos', async () => {
+    
 });
 
 test('Atualizar registro', async () => {
@@ -135,10 +162,6 @@ test('Atualizar registro', async () => {
     expect(estabelecimento.status).toBe(false);
     expect(estabelecimento.agencia).toBe('9832');
     expect(estabelecimento.conta).toBe('752934');
-});
-
-test('Não atualizar registro com valores inválidos', async () => {
-    
 });
 
 test('Não atualizar registro com valores repetidos', async () => {
