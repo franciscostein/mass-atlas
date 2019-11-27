@@ -1,3 +1,5 @@
+const emailValidator = require('email-validator');
+
 //  Backend API validation
 
 const preSave = estabelecimento => {
@@ -39,6 +41,10 @@ const preSave = estabelecimento => {
     if (email && email.length > 45) {
         validation.code = 400;
         validation.error.push({ field: 'email', message: 'e-mail deve ter até 45 caracteres' });
+
+        if (!emailValidator.validate(email)) {
+            validation.error.push({ field: 'email', message: 'O e-mail informado não é válido' });
+        }
     }
 
     // Endereco

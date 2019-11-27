@@ -47,13 +47,25 @@ test('Não inserir registro duplicado', async () => {
 });
 
 test('Não inserir com valores inválidos', async () => {
-    await request(app)
+    let response = await request(app)
         .post('/estabelecimentos')
         .send({
             razao_social: 'Ryan e Isis Assessoria Jurídica Ltda',
-            cnpj: '52998350000192874543',
+            cnpj: '321',
         })
         .expect(400);
+
+    expect(response.body.field).toBe('razao_social');
+
+    response = await request(app)
+        .post('/estabelecimentos')
+        .send({
+            razao_social: 'test',
+            cnpj: '52998350000192',
+        })
+        .expect(400);
+
+    expect(response.body.field).toBe('cnpj');
 });
 
 test('Buscar estabelecimento por ID', async () => {
@@ -103,7 +115,7 @@ test('Não atualizar com valores duplicados', async () => {
         .patch(`/estabelecimentos/${insertedId}`)
         .send({
             razao_social: 'Geraldo e Antonio Ferragens ME',
-            cnpj: '97587089000176'  // CNPJ novo para não dar erro NOT NULL
+            cnpj: '123'
         })
         .expect(400);
         
@@ -118,11 +130,6 @@ test('Não atualizar com valores duplicados', async () => {
         .expect(400);
 
     expect(response.body.field).toBe('cnpj');        
-});
-
-
-test('Não atualizar com valores inválidos', async () => {
-    
 });
 
 test('Atualizar registro', async () => {
@@ -164,10 +171,18 @@ test('Atualizar registro', async () => {
     expect(estabelecimento.conta).toBe('752934');
 });
 
-test('Não atualizar registro com valores repetidos', async () => {
-
-});    
-
 test('Excluír registro', async () => {
+    await request(app)
+        .delete(`/estabelecimentos/${insertedId}`)
+        .expect(200);
 
+    await request(app)
+        .get(`/estabelecimentos/${insertedId}`)
+        .expect(204);
+
+    const response = await request(app)
+        .get('/estabelecimentos')
+        .expect(200);
+
+    expect(response.body.length).toBe(1);
 });

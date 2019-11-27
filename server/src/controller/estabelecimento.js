@@ -83,7 +83,15 @@ const update = async (_id, data, result) => {
 }
 
 const remove = async (_id, result) => {
+    const estabelecimento = new Estabelecimento();
 
+    estabelecimento.delete(_id, (err, res) => {
+        if (err) {
+            result(500, 'Erro ao remover registro', null);
+        } else {
+            result(200, null, res);
+        }
+    });
 }
 
 module.exports = {

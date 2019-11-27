@@ -64,11 +64,11 @@ class Estabelecimento {
     }
 
     delete(_id, callback) {
-        sql.query('DELETE FROM estabelecimentos e WHERE e.id = ?', _id, (error, result) => {
+        sql.query('DELETE FROM estabelecimentos WHERE id = ?', _id, (error, result) => {
             if (error) {
                 callback(error, null);
             } else {
-                callback(null, result[0]);
+                callback(null, result);
             }
         });
     }

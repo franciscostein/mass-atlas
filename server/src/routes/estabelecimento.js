@@ -50,7 +50,15 @@ router.patch('/estabelecimentos/:id', async (req, res) => {
 
 // Delete
 router.delete('/estabelecimentos/:id', async (req, res) => {
+    const _id = req.params.id;
 
+    await controller.remove(_id, (code, error, response) => {
+
+        if (code === 200) {
+            return res.status(code).send({ response });
+        }
+        return res.status(code).send({ error });
+    });
 });
 
 module.exports = router;
