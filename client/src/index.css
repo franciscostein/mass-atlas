@@ -4,7 +4,7 @@
 	box-sizing: border-box;
 }
 
-body {
+body {	/* font settings for non-bootstrap elements */
 	font-family: Roboto, Arial, sans-serif;
 	color: #555;
 	font-weight: 300;
@@ -19,5 +19,5 @@ code {
 }
 
 .content { /* footer sticker */
-	min-height: calc(100vh - 200px);
+	min-height: calc(100vh - 192px);
 }

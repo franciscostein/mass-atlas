@@ -1,0 +1,15 @@
+$theme-colors: (
+    "primary": #FF5722,
+    "danger": #F44336
+);
+
+// fonts
+$body-color: rgb(78, 78, 78);  // body font color
+$font-family-base: Roboto, Arial, sans-serif;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+$headings-font-weight: 300;
+
+// import has to be after changes
+@import "../node_modules/bootstrap/scss/bootstrap.scss";

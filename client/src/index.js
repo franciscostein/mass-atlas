@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.css';
+import * as serviceWorker from './serviceWorker';
+import App from './App';
+import './index.css';
+import './custom.scss'; // Bootstrap 4 with SASS
 
 // default global settings for Axios
 axios.defaults.baseURL = 'http://localhost:4000';   // back-end URL
