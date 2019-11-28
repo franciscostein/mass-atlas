@@ -2,9 +2,9 @@ import React from 'react';
 
 const Estabelecimento = props => {
     return (
-        <div>
-            <h2>Estabelecimento</h2>
-       </div>
+        <div className="text-center">
+            <h1>Página não encontrada</h1>
+        </div>
     );
 }
 

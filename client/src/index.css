@@ -10,7 +10,6 @@ body {
 	font-weight: 300;
 	font-size: 20px;
 	text-rendering: optimizeLegibility;
-
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
@@ -19,6 +18,6 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-.content { /* footer sticker, 100%vh - (75px footer h + 35px footer marginTop + 105px headerBar h) */
-	min-height: calc(100vh - 215px);
+.content { /* footer sticker */
+	min-height: calc(100vh - 200px);
 }

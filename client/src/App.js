@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Header from './layouts/Header';
 import Footer from './layouts/Footer';
+import NotFound from './components/NotFound/NotFound';
 import Estabelecimentos from './components/Establecimentos/Estabelecimentos';
 import Estabelecimento from './components/Establecimentos/Estabelecimento/Estabelecimento';
 
@@ -19,7 +20,7 @@ function App() {
 						<Estabelecimentos />
 					</Route>
 					<Route path="/">
-						<h1>Página não encontrada</h1>
+						<NotFound />
 					</Route>
 				</Switch>
 			</div>
