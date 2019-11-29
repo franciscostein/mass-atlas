@@ -8,7 +8,7 @@ body {	/* font settings for non-bootstrap elements */
 	font-family: Roboto, Arial, sans-serif;
 	color: #555;
 	font-weight: 300;
-	font-size: 20px;
+	/* font-size: 20px; */
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -22,6 +22,10 @@ code {
 
 .content { /* footer sticker */
 	min-height: calc(100vh - 240px);
+}
+
+ul {
+	list-style-type: none;
 }
 
 .clearfix {zoom: 1} /* it clears the float after an element */

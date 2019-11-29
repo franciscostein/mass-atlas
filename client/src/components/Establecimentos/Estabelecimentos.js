@@ -1,47 +1,87 @@
 import React from 'react';
+import Octicon, { Plus } from '@primer/octicons-react';
+
+import EstabelecimentoListItem from '../fragments/EstabelecimentoListItem/EstabelecimentoListItem';
 
 const estabelecimentos = [
     {
         _id: 1,
         nomeFantasia: 'Primeiro',
         razaoSocial: 'Primeiro LTDA.',
-        CNPJ: '71870613000128',
+        cnpj: '718.706.154/0001-28',
         email: 'atendimento@primeiro.com',
-        telefone: '19976236890',
+        telefone: '(19) 9.7623-6890',
         endereco: 'Rua 1, 001, Centro',
         cidade: 'Campinas',
         estado: 'SP',
         cadastro: '11/23/2002',
         categoria: 'Mercado',
         agencia: '2674',
-        conta: '567294'
+        conta: '567294',
+        ativo: true
     },
     {
         _id: 2,
         nomeFantasia: 'Segundo',
         razaoSocial: 'Segundo LTDA.',
-        CNPJ: '82370603000428',
+        cnpj: '823.706.030/0002-28',
         email: 'atendimento@segundo.com',
-        telefone: '11975236490',
+        telefone: '(11) 9.7523-6490',
         endereco: 'Rua 2, 002, Centro',
         cidade: 'Belo Horizonte',
         estado: 'MG',
         cadastro: '03/30/1991',
         categoria: 'Posto',
         agencia: '2234',
-        conta: '567434'
+        conta: '567434',
+        ativo: false
+    },
+    {
+        _id: 3,
+        nomeFantasia: 'Terceiro',
+        razaoSocial: 'Terceiro LTDA.',
+        cnpj: '397.726.139/0001-87',
+        email: 'atendimento@terceiro.com',
+        telefone: '(21) 3523-6490',
+        endereco: 'Rua 3, 003, Guanabara',
+        cidade: 'Rio de Janeiro',
+        estado: 'RJ',
+        cadastro: '06/23/1988',
+        categoria: 'Borracharia',
+        agencia: '5624',
+        conta: '434902',
+        ativo: true
     }
 ]
 
 const Estabelecimentos = props => {
     return (
-        <ul>
-            {
-                estabelecimentos.map(estabelecimento => {
-                return <li key={estabelecimento._id}>{estabelecimento.nomeFantasia}</li>
-                })
-            }
-        </ul>
+        
+        <div className="container">
+            <span className="h2">Estabelecimentos</span>
+            <a href="#" className="float-right text-success">
+                <Octicon icon={Plus} size='medium' />
+            </a>
+            <ul className="mt-5">
+                {
+                    estabelecimentos.map((estabelecimento, i) => {
+                        return <li key={estabelecimento._id}>
+                            <EstabelecimentoListItem
+                                fantasia={estabelecimento.nomeFantasia}
+                                ativo={estabelecimento.ativo}
+                                cnpj={estabelecimento.cnpj}
+                                telefone={estabelecimento.telefone}
+                                cidade={estabelecimento.cidade}
+                                estado={estabelecimento.estado}
+                            />
+                            { i !== estabelecimentos.length - 1 ?
+                                <hr/> : ''
+                            }
+                        </li>
+                    })
+                }
+            </ul>
+        </div>
     );
 }
 
