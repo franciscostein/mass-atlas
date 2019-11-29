@@ -36,7 +36,7 @@ const Estabelecimento = props => {
                         inputId="inputCnpj"
                         label="CNPJ"
                         type="text"
-                        maxLength={14}
+                        maxLength={18}
                         invalidMessage={'Inválido'}
                         required={true}
                     />
@@ -59,9 +59,9 @@ const Estabelecimento = props => {
                         required={false}
                     />
                 </div>
-                <div className="row-c mt-3">
+                <div className="row-c">
                     <Input
-                        span="span2of2"
+                        span="span2of4"
                         inputId="inputEndereco"
                         label="Endereço"
                         type="text"
@@ -69,10 +69,8 @@ const Estabelecimento = props => {
                         invalidMessage={'Inválido'}
                         required={false}
                     />
-                </div>
-                <div className="row-c">
                     <Input
-                        span="span1of2"
+                        span="span1of4"
                         inputId="inputCidade"
                         label="Cidade"
                         type="text"
@@ -81,54 +79,63 @@ const Estabelecimento = props => {
                         required={false}
                     />
                     <SelectEstado
-                        span="span1of2"
-                    />
-                </div>
-                <div className="row-c mt-3">
-                    <Input
-                        span="span1of2"
-                        inputId="inputAgencia"
-                        label="Agência"
-                        type="text"
-                        maxLength={4}
-                        invalidMessage={'Inválido'}
-                        required={false}
-                    />
-                    <Input
-                        span="span1of2"
-                        inputId="inputConta"
-                        label="Conta"
-                        type="text"
-                        maxLength={6}
-                        invalidMessage={'Inválido'}
-                        required={false}
+                        span="span1of4"
                     />
                 </div>
                 <div className="row-c">
-                    <div className="col-c span1of3">
-                        <div className="form-group">
-                            <label htmlFor="dateCadastro">Cadastro</label>
-                            <input type="date" className="form-control" id="dateCadastro"/>
-                            <div className="invalid-feedback">Inválido</div>
+                    <div className="form-group">
+                        <label></label>
+                        <div className="custom-control custom-checkbox">
+                            <input type="checkbox" className="custom-control-input" id="checkAtivo" name="Ativo"/>
+                            <label className="custom-control-label" htmlFor="checkAtivo">Ativo</label>
                         </div>
                     </div>
+                </div>
+                <div className="row-c">
                     <div className="col-c span1of3">
-                        <div className="form-group">
-                            <label htmlFor="selectCategoria">Categoria</label>
-                            <select className="form-control" id="selectCategoria">
-                                <option>Mercado</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="col-c span1of3">
-                        <div className="form-group text-center">
-                            <label></label>
-                            <div className="custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="checkAtivo" name="Ativo"/>
-                                <label className="custom-control-label" htmlFor="checkAtivo">Ativo</label>
+                        <div className="col-c span2of2">
+                            <div className="form-group">
+                                <label htmlFor="dateCadastro">Cadastro</label>
+                                <input type="date" className="form-control" id="dateCadastro"/>
+                                <div className="invalid-feedback">Inválido</div>
                             </div>
                         </div>
                     </div>
+                    <div className="col-c span1of3">
+                        <div className="col-c span2of2">
+                            <div className="form-group">
+                                <label htmlFor="selectCategoria">Categoria</label>
+                                <select className="form-control" id="selectCategoria">
+                                    <option>Mercado</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-c span1of3">
+                        <Input
+                            span="span1of2"
+                            inputId="inputAgencia"
+                            label="Agência"
+                            type="text"
+                            maxLength={4}
+                            invalidMessage={'Inválido'}
+                            required={false}
+                        />
+                        <Input
+                            span="span1of2"
+                            inputId="inputConta"
+                            label="Conta"
+                            type="text"
+                            maxLength={6}
+                            invalidMessage={'Inválido'}
+                            required={false}
+                        />
+                    </div>
+                </div>
+                <div className="row-c">
+                    {/* <div className="col-c span1of3"> */}
+                        
+                    {/* </div> */}
                 </div>
                 <div className="row-c text-center mt-4">
                     <div className="form-group">

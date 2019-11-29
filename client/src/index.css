@@ -119,3 +119,41 @@ code {
 		width: 100%;
 	}
 }
+
+/*  GRID OF FOUR   ============================================================================= */
+	
+.span4of4 {
+	width: 100%; 
+}
+
+.span3of4 {
+	width: 74.6%; 
+}
+
+.span2of4 {
+	width: 49.2%; 
+}
+
+.span1of4 {
+	width: 23.8%; 
+}
+
+
+/*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
+
+@media only screen and (max-width: 480px) {
+	.span4of4 {
+		width: 100%; 
+	}
+	.span3of4 {
+		width: 100%; 
+	}
+	.span2of4 {
+		width: 100%; 
+	}
+	.span1of4 {
+		width: 100%; 
+	}
+}
+
+/*  GRID OF FIVE   ============================================================================= */
