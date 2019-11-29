@@ -21,7 +21,7 @@ code {
 /* BASIC SETUP */
 
 .content { /* footer sticker */
-	min-height: calc(100vh - 192px);
+	min-height: calc(100vh - 240px);
 }
 
 .clearfix {zoom: 1} /* it clears the float after an element */

@@ -6,8 +6,14 @@ import SelectEstado from '../../fragments/SelectEstado';
 const Estabelecimento = props => {
     return (
         <div>
-            <h2 className="text-center">Estabelecimento</h2>
+            <h2 className="text-center"><span class="badge badge-primary">Novo</span> Estabelecimento</h2>
             <form className="container needs-validation mt-4">
+                <div className="row-c mb-4">
+                    <div className="custom-control custom-switch">
+                        <input type="checkbox" className="custom-control-input" id="switchAtivo"/>
+                        <label className="custom-control-label" htmlFor="switchAtivo">Ativo</label>
+                    </div>
+                </div>
                 <div className="row-c">
                     <Input
                         span="span2of2"
@@ -83,15 +89,6 @@ const Estabelecimento = props => {
                     />
                 </div>
                 <div className="row-c">
-                    <div className="form-group">
-                        <label></label>
-                        <div className="custom-control custom-checkbox">
-                            <input type="checkbox" className="custom-control-input" id="checkAtivo" name="Ativo"/>
-                            <label className="custom-control-label" htmlFor="checkAtivo">Ativo</label>
-                        </div>
-                    </div>
-                </div>
-                <div className="row-c">
                     <div className="col-c span1of3">
                         <div className="col-c span2of2">
                             <div className="form-group">
@@ -131,11 +128,6 @@ const Estabelecimento = props => {
                             required={false}
                         />
                     </div>
-                </div>
-                <div className="row-c">
-                    {/* <div className="col-c span1of3"> */}
-                        
-                    {/* </div> */}
                 </div>
                 <div className="row-c text-center mt-4">
                     <div className="form-group">
