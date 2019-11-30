@@ -1,6 +1,8 @@
 import React from 'react';
 
 import Input from '../../fragments/Input';
+import InputCNPJ from '../../fragments/InputCNPJ';
+import InputTelefone from '../../fragments/InputTelefone';
 import SelectEstado from '../../fragments/SelectEstado';
 
 const Estabelecimento = props => {
@@ -37,7 +39,7 @@ const Estabelecimento = props => {
                     />
                 </div>
                 <div className="row-c">
-                    <Input
+                    <InputCNPJ
                         span="span1of3"
                         inputId="inputCnpj"
                         label="CNPJ"
@@ -55,7 +57,7 @@ const Estabelecimento = props => {
                         invalidMessage={'Inválido'}
                         required={false}
                     />
-                    <Input
+                    <InputTelefone
                         span="span1of3"
                         inputId="inputTelefone"
                         label="Telefone"

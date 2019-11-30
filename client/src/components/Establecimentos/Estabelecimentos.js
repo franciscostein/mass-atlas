@@ -1,7 +1,7 @@
 import React from 'react';
 import Octicon, { Plus } from '@primer/octicons-react';
 
-import EstabelecimentoListItem from '../fragments/EstabelecimentoListItem/EstabelecimentoListItem';
+import EstabelecimentoListItem from '../fragments/EstabelecimentoListItem';
 
 const estabelecimentos = [
     {
