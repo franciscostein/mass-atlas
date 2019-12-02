@@ -11,8 +11,8 @@ const InputAgencia = props => {
                     {props.label}
                 </label>
                 <MaskedInput
-                    mask={[/[0-9]/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/]}
-                    placeholder="__.___-_"
+                    mask={[/[0-9]/, /\d/, /\d/, '-', /\d/]}
+                    placeholder="___-_"
                     type={props.type} 
                     className="form-control" 
                     id={props.inputId}
