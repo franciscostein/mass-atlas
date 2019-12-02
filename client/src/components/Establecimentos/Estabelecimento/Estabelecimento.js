@@ -1,18 +1,77 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-import Input from '../../fragments/Input';
-import InputCNPJ from '../../fragments/InputCNPJ';
-import InputTelefone from '../../fragments/InputTelefone';
-import SelectEstado from '../../fragments/SelectEstado';
+import Input from '../../fragments/Inputs/Input';
+import InputCNPJ from '../../fragments/Inputs/InputCNPJ';
+import InputTelefone from '../../fragments/Inputs/InputTelefone';
+import SelectEstado from '../../fragments/Selects/SelectEstado';
+import SelectCategoria from '../../fragments/Selects/SelectCategoria';
+import InputAgencia from '../../fragments/Inputs/InputAgencia';
+import InputConta from '../../fragments/Inputs/InputConta';
 
 const Estabelecimento = props => {
+    const { id } = useParams();
+    const [title, setTitle] = useState('Estabelecimento');
+    const [status, setStatus] = useState(false);
+    const [fantasia, setFantasia] = useState('');
+    const [razaoSocial, setRazaoSocial] = useState('');
+    const [cnpj, setCnpj] = useState('');
+    const [email, setEmail] = useState('');
+    const [telefone, setTelefone] = useState('');
+    const [endereco, setEndereco] = useState('');
+    const [cidade, setCidade] = useState('');
+    const [estado, setEstado] = useState('');
+    const [cadastro, setCadastro] = useState(new Date());
+    const [categoria, setCategoria] = useState(0);
+    const [agencia, setAgencia] = useState('');
+    const [conta, setConta] = useState('');
+
+    useEffect(() => {
+        if (id) {
+            axios.get(`/estabelecimentos/${id}`)
+            .then(response => {
+                const { data } = response;
+
+                setTitle(data.nome_fantasia);
+                setFantasia(data.nome_fantasia);
+                setRazaoSocial(data.razao_social);
+                setCnpj(data.cnpj);
+                setEmail(data.email);
+                setTelefone(data.telefone);
+                setEndereco(data.endereco);
+                setCidade(data.cidade);
+                setEstado(data.estado);
+                setCadastro(data.data_cadastro);
+                setCategoria(data.categoria);
+                setStatus(data.status);
+                setAgencia(data.agencia);
+                setConta(data.conta);
+            })
+            .catch(error => {
+                setTitle('Estabelecimento não encontrado');
+                console.log(error);
+            });
+        }
+    }, []);
+
     return (
         <div>
-            <h2 className="text-center"><span class="badge badge-primary">Novo</span> Estabelecimento</h2>
+            <h2 className="text-center">
+                { !id ? 
+                    <span class="badge badge-primary">Novo</span> 
+                : '' } {title}
+            </h2>
             <form className="container needs-validation mt-4">
                 <div className="row-c mb-4">
                     <div className="custom-control custom-switch">
-                        <input type="checkbox" className="custom-control-input" id="switchAtivo"/>
+                        <input 
+                            type="checkbox" 
+                            className="custom-control-input" 
+                            id="switchAtivo"
+                            checked={status ? 'checked' : ''}
+                            onChange={event => setStatus(event.target.value)}
+                        />
                         <label className="custom-control-label" htmlFor="switchAtivo">Ativo</label>
                     </div>
                 </div>
@@ -25,6 +84,8 @@ const Estabelecimento = props => {
                         maxLength={60}
                         invalidMessage={'Inválido'}
                         required={false}
+                        value={fantasia}
+                        onChange={value => setFantasia(value)}
                     />
                 </div>
                 <div className="row-c">
@@ -36,6 +97,8 @@ const Estabelecimento = props => {
                         maxLength={80}
                         invalidMessage={'Inválido'}
                         required={true}
+                        value={razaoSocial}
+                        onChange={value => setRazaoSocial(value)}
                     />
                 </div>
                 <div className="row-c">
@@ -47,6 +110,8 @@ const Estabelecimento = props => {
                         maxLength={18}
                         invalidMessage={'Inválido'}
                         required={true}
+                        value={cnpj}
+                        onChange={value => setCnpj(value)}
                     />
                     <Input
                         span="span1of3"
@@ -56,15 +121,18 @@ const Estabelecimento = props => {
                         maxLength={45}
                         invalidMessage={'Inválido'}
                         required={false}
+                        value={email}
+                        onChange={value => setEmail(value)}
                     />
                     <InputTelefone
                         span="span1of3"
                         inputId="inputTelefone"
                         label="Telefone"
                         type="text"
-                        maxLength={11}
                         invalidMessage={'Inválido'}
                         required={false}
+                        value={telefone}
+                        onChange={value => setTelefone(value)}
                     />
                 </div>
                 <div className="row-c">
@@ -76,6 +144,8 @@ const Estabelecimento = props => {
                         maxLength={60}
                         invalidMessage={'Inválido'}
                         required={false}
+                        value={endereco}
+                        onChange={value => setEndereco(value)}
                     />
                     <Input
                         span="span1of4"
@@ -85,9 +155,13 @@ const Estabelecimento = props => {
                         maxLength={32}
                         invalidMessage={'Inválido'}
                         required={false}
+                        value={cidade}
+                        onChange={value => setCidade(value)}
                     />
                     <SelectEstado
                         span="span1of4"
+                        value={estado}
+                        onChange={value => setEstado(value)}
                     />
                 </div>
                 <div className="row-c">
@@ -95,23 +169,26 @@ const Estabelecimento = props => {
                         <div className="col-c span2of2">
                             <div className="form-group">
                                 <label htmlFor="dateCadastro">Cadastro</label>
-                                <input type="date" className="form-control" id="dateCadastro"/>
+                                <input 
+                                    type="date" 
+                                    className="form-control" 
+                                    id="dateCadastro"
+                                    value={cadastro}
+                                    onChange={value => setCadastro(value)}
+                                />
                                 <div className="invalid-feedback">Inválido</div>
                             </div>
                         </div>
                     </div>
                     <div className="col-c span1of3">
-                        <div className="col-c span2of2">
-                            <div className="form-group">
-                                <label htmlFor="selectCategoria">Categoria</label>
-                                <select className="form-control" id="selectCategoria">
-                                    <option>Mercado</option>
-                                </select>
-                            </div>
-                        </div>
+                        <SelectCategoria
+                            span="span2of2"
+                            value={categoria}
+                            onChange={value => setCategoria(value)}
+                        />
                     </div>
                     <div className="col-c span1of3">
-                        <Input
+                        <InputAgencia
                             span="span1of2"
                             inputId="inputAgencia"
                             label="Agência"
@@ -119,8 +196,10 @@ const Estabelecimento = props => {
                             maxLength={4}
                             invalidMessage={'Inválido'}
                             required={false}
+                            value={agencia}
+                            onChange={value => setAgencia(value)}
                         />
-                        <Input
+                        <InputConta
                             span="span1of2"
                             inputId="inputConta"
                             label="Conta"
@@ -128,6 +207,8 @@ const Estabelecimento = props => {
                             maxLength={6}
                             invalidMessage={'Inválido'}
                             required={false}
+                            value={conta}
+                            onChange={value => setConta(value)}
                         />
                     </div>
                 </div>

@@ -14,7 +14,7 @@ const EstabelecimentoListItem = props => {
             </div>
             <div className="row-c pt-2">
                 <span className="pl-2">{`${props.cidade} - ${props.estado}`}</span>
-                <a href="#" className="float-right text-danger">
+                <a href="#" className="float-right text-danger" data-toggle="tooltip" data-placement="left" title="Remover">
                     <Octicon icon={Trashcan} />
                 </a>
             </div>

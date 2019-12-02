@@ -1,5 +1,5 @@
 import React from 'react';
-import Octicon, { Plus } from '@primer/octicons-react';
+import Octicon, { Plus, Search } from '@primer/octicons-react';
 
 import EstabelecimentoListItem from '../fragments/EstabelecimentoListItem';
 
@@ -59,10 +59,23 @@ const Estabelecimentos = props => {
         
         <div className="container">
             <span className="h2">Estabelecimentos</span>
-            <a href="#" className="float-right text-success">
+
+            <a href="#" className="float-right text-success" data-toggle="tooltip" data-placement="left" title="Adicionar">
                 <Octicon icon={Plus} size='medium' />
             </a>
-            <ul className="mt-5">
+
+            <div className="row-c mt-2">
+                <div className="col-c span1of2">
+                    <div className="input-group">
+                        <input type="text" className="form-control" placeholder="Pesquisar"/>
+                        <div className="input-group-append">
+                            <button className="input-group-text"><Octicon icon={Search} size='small' /></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ul className="mt-3">
                 {
                     estabelecimentos.map((estabelecimento, i) => {
                         return <li key={estabelecimento._id}>

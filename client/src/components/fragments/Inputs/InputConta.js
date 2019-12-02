@@ -1,6 +1,7 @@
 import React from 'react';
+import MaskedInput from 'react-text-mask';
 
-const Input = props => {
+const InputConta = props => {
     return (
         <div className={`col-c ${props.span}`}>
             <div className="form-group">
@@ -9,12 +10,15 @@ const Input = props => {
                 >
                     {props.label}
                 </label>
-                <input 
+                <MaskedInput
+                    mask={[/[0-9]/, /\d/, /\d/, '-', /\d/]}
+                    placeholder="___-_"
                     type={props.type} 
                     className="form-control" 
                     id={props.inputId}
-                    maxLength={props.maxLength}
                     required={ props.required ? 'required' : '' }
+                    value={props.value}
+                    onChange={event => props.onChange(event.target.value)}
                 />
                 <div 
                     className="invalid-feedback"
@@ -26,4 +30,4 @@ const Input = props => {
     );
 }
 
-export default Input;
+export default InputConta;
