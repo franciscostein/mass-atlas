@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import cnpjUtils from 'node-cnpj';
 
 import Input from '../../fragments/Inputs/Input';
 import InputCNPJ from '../../fragments/Inputs/InputCNPJ';
@@ -33,20 +34,22 @@ const Estabelecimento = props => {
             .then(response => {
                 const { data } = response;
 
-                setTitle(data.nome_fantasia);
-                setFantasia(data.nome_fantasia);
-                setRazaoSocial(data.razao_social);
-                setCnpj(data.cnpj);
-                setEmail(data.email);
-                setTelefone(data.telefone);
-                setEndereco(data.endereco);
-                setCidade(data.cidade);
-                setEstado(data.estado);
-                setCadastro(data.data_cadastro);
-                setCategoria(data.categoria);
-                setStatus(data.status);
-                setAgencia(data.agencia);
-                setConta(data.conta);
+                if (data.id) {
+                    setTitle(data.nome_fantasia);
+                    setFantasia(data.nome_fantasia);
+                    setRazaoSocial(data.razao_social);
+                    setCnpj(cnpjUtils.mask(data.cnpj));
+                    setEmail(data.email);
+                    setTelefone(maskPhone(data.telefone));
+                    setEndereco(data.endereco);
+                    setCidade(data.cidade);
+                    setEstado(data.estado);
+                    setCadastro(data.data_cadastro);
+                    setCategoria(data.categoria);
+                    setStatus(data.status);
+                    setAgencia(data.agencia);
+                    setConta(data.conta);
+                }
             })
             .catch(error => {
                 setTitle('Estabelecimento não encontrado');
@@ -54,6 +57,21 @@ const Estabelecimento = props => {
             });
         }
     }, []);
+
+    const maskPhone = value => {
+        const ddd = value.substring(0, 2);
+        let first = '';
+        let second = '';
+
+        if (value.length === 11) {  // celular
+            first =  value.substring(2, 7);
+            second = value.substring(7, 11);
+        } else {    // fixo
+            first =  value.substring(2, 6);
+            second = value.substring(6, 10);
+        }
+        return `(${ddd}) ${first}-${second}`;
+    }
 
     return (
         <div>
@@ -105,8 +123,7 @@ const Estabelecimento = props => {
                     <InputCNPJ
                         span="span1of3"
                         inputId="inputCnpj"
-                        label="CNPJ"
-                        type="text"
+                        label="CNPJ"Telefone
                         maxLength={18}
                         invalidMessage={'Inválido'}
                         required={true}
@@ -131,6 +148,7 @@ const Estabelecimento = props => {
                         type="text"
                         invalidMessage={'Inválido'}
                         required={false}
+                        isCelular={telefone.length === 15}
                         value={telefone}
                         onChange={value => setTelefone(value)}
                     />

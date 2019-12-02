@@ -1,18 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MaskedInput from 'react-text-mask';
 
 const maskTelefone = ['(', /[0-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 const maskCelular = ['(', /[0-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 
 const InputTelefone = props => {
-    const [isCelular, setIsCelular] = React.useState(false);
-    const [telefone, setTelefone] = React.useState('');
 
-    const handleTelefoneChange = value => {
-        if (value[5] === 9) {
-            setIsCelular(true);
-        }
-    }
+    useEffect(() => {}, [props.value]);
 
     return (
         <div className={`col-c ${props.span}`}>
@@ -23,7 +17,7 @@ const InputTelefone = props => {
                     {props.label}
                 </label>
                 <MaskedInput
-                    mask={isCelular ? maskCelular : maskTelefone}
+                    mask={props.isCelular ? maskCelular : maskTelefone}
                     placeholder="(__) ____-____"
                     type={props.type} 
                     className="form-control" 
