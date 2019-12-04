@@ -66,21 +66,21 @@ const preSave = estabelecimento => {
     }
 
     // Telefone
-    if (telefone && telefone.length > 11) {
+    if (telefone && telefone.length > 15) {
         validation.code = 400;
-        validation.error.push({ field: 'telefone', message: 'Telefone deve ter até 11 caracteres' });
+        validation.error.push({ field: 'telefone', message: 'Telefone deve ter até 15 caracteres' });
     }
 
     // Agencia
-    if (agencia && agencia.length > 4) {
+    if (agencia && agencia.length > 5) {
         validation.code = 400;
-        validation.error.push({ field: 'agencia', message: 'Agencia deve ter até 4 caracteres' });
+        validation.error.push({ field: 'agencia', message: 'Agencia deve ter até 5 caracteres' });
     }
 
     // Conta
-    if (conta && conta.length > 6) {
+    if (conta && conta.length > 8) {
         validation.code = 400;
-        validation.error.push({ field: 'conta', message: 'Conta deve ter até 6 caracteres' });
+        validation.error.push({ field: 'conta', message: 'Conta deve ter até 8 caracteres' });
     }
     return validation;
 }

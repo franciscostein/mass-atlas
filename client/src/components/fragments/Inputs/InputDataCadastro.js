@@ -1,25 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import MaskedInput from 'react-text-mask';
 
-const InputTelefone = props => {
-    
-    useEffect(() => {}, [props.value]);
-
-    function mask(userInput) {
-        let numbers = userInput.match(/\d/g);
-        let numberLength = 0;
-
-        if (numbers) {
-            numberLength = numbers.join("").length;
-        }
-      
-        if (numberLength > 10) {
-            return ['(', /[1-9]/, /[1-9]/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-        } else {
-            return ['(', /[1-9]/, /[1-9]/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-        }
-    }
-
+const InputDataCadastro = props => {
     return (
         <div className={`col-c ${props.span}`}>
             <div className="form-group">
@@ -29,9 +11,8 @@ const InputTelefone = props => {
                     {props.label}
                 </label>
                 <MaskedInput
-                    mask={value => mask(value)}
-                    guide={true}
-                    placeholder="(__) ____-____"
+                    mask={[/[0-9]/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]}
+                    placeholder="__/__/____"
                     type={props.type} 
                     className="form-control" 
                     id={props.inputId}
@@ -49,4 +30,4 @@ const InputTelefone = props => {
     );
 }
 
-export default InputTelefone;
+export default InputDataCadastro;

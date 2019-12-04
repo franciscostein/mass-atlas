@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import cnpjUtils from 'node-cnpj';
 
+import mask from '../../../utils/mask';
 import Input from '../../fragments/Inputs/Input';
 import InputCNPJ from '../../fragments/Inputs/InputCNPJ';
 import InputTelefone from '../../fragments/Inputs/InputTelefone';
 import SelectEstado from '../../fragments/Selects/SelectEstado';
+import InputDataCadastro from '../../fragments/Inputs/InputDataCadastro';
 import SelectCategoria from '../../fragments/Selects/SelectCategoria';
 import InputAgencia from '../../fragments/Inputs/InputAgencia';
 import InputConta from '../../fragments/Inputs/InputConta';
 
 const Estabelecimento = props => {
     const { id } = useParams();
+    const history = useHistory();
     const [title, setTitle] = useState('Estabelecimento');
     const [status, setStatus] = useState(false);
     const [fantasia, setFantasia] = useState('');
@@ -23,7 +26,7 @@ const Estabelecimento = props => {
     const [endereco, setEndereco] = useState('');
     const [cidade, setCidade] = useState('');
     const [estado, setEstado] = useState('');
-    const [cadastro, setCadastro] = useState(new Date());
+    const [cadastro, setCadastro] = useState(null);
     const [categoria, setCategoria] = useState(0);
     const [agencia, setAgencia] = useState('');
     const [conta, setConta] = useState('');
@@ -40,15 +43,15 @@ const Estabelecimento = props => {
                     setRazaoSocial(data.razao_social);
                     setCnpj(cnpjUtils.mask(data.cnpj));
                     setEmail(data.email);
-                    setTelefone(maskPhone(data.telefone));
+                    setTelefone(mask.telefone(data.telefone));
                     setEndereco(data.endereco);
                     setCidade(data.cidade);
                     setEstado(data.estado);
-                    setCadastro(data.data_cadastro);
+                    setCadastro(mask.data(data.data_cadastro));
                     setCategoria(data.categoria);
                     setStatus(data.status);
-                    setAgencia(data.agencia);
-                    setConta(data.conta);
+                    setAgencia(mask.agencia(data.agencia));
+                    setConta(mask.conta(data.conta));
                 }
             })
             .catch(error => {
@@ -58,26 +61,15 @@ const Estabelecimento = props => {
         }
     }, []);
 
-    const maskPhone = value => {
-        const ddd = value.substring(0, 2);
-        let first = '';
-        let second = '';
-
-        if (value.length === 11) {  // celular
-            first =  value.substring(2, 7);
-            second = value.substring(7, 11);
-        } else {    // fixo
-            first =  value.substring(2, 6);
-            second = value.substring(6, 10);
-        }
-        return `(${ddd}) ${first}-${second}`;
+    const handleCancelarClick = () => {
+        history.goBack();
     }
 
     return (
         <div>
             <h2 className="text-center">
                 { !id ? 
-                    <span class="badge badge-primary">Novo</span> 
+                    <span className="badge badge-primary">Novo</span> 
                 : '' } {title}
             </h2>
             <form className="container needs-validation mt-4">
@@ -184,19 +176,16 @@ const Estabelecimento = props => {
                 </div>
                 <div className="row-c">
                     <div className="col-c span1of3">
-                        <div className="col-c span2of2">
-                            <div className="form-group">
-                                <label htmlFor="dateCadastro">Cadastro</label>
-                                <input 
-                                    type="date" 
-                                    className="form-control" 
-                                    id="dateCadastro"
-                                    value={cadastro}
-                                    onChange={value => setCadastro(value)}
-                                />
-                                <div className="invalid-feedback">Inválido</div>
-                            </div>
-                        </div>
+                        <InputDataCadastro
+                            span="span2of2"
+                            inputId="dateCadastro"
+                            label="Cadastro"
+                            type="text"
+                            invalidMessage={'Inválido'}
+                            required={false}
+                            value={cadastro}
+                            onChange={value => setCadastro(value)}
+                        />
                     </div>
                     <div className="col-c span1of3">
                         <SelectCategoria
@@ -230,9 +219,22 @@ const Estabelecimento = props => {
                         />
                     </div>
                 </div>
-                <div className="row-c text-center mt-4">
-                    <div className="form-group">
-                        <button type="submit" className="btn btn-primary">Salvar</button>
+                <div className="row-c mt-2">
+                    <div className="col-c span1of2">
+                        <div className="form-group float-right">
+                            <button type="submit" className="btn btn-primary">Salvar</button>
+                        </div>
+                    </div>
+                    <div className="col-c span1of2">
+                        <div className="form-group">
+                            <button 
+                                type="button" 
+                                className="btn btn-secondary"
+                                onClick={() => handleCancelarClick()}
+                            >
+                                Cancelar
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>

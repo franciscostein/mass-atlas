@@ -1,68 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 import Octicon, { Plus, Search } from '@primer/octicons-react';
+import cnpjUtils from 'node-cnpj';
 
+import mask from '../../utils/mask';
 import EstabelecimentoListItem from '../fragments/EstabelecimentoListItem';
 
-const estabelecimentos = [
-    {
-        _id: 1,
-        nomeFantasia: 'Primeiro',
-        razaoSocial: 'Primeiro LTDA.',
-        cnpj: '718.706.154/0001-28',
-        email: 'atendimento@primeiro.com',
-        telefone: '(19) 9.7623-6890',
-        endereco: 'Rua 1, 001, Centro',
-        cidade: 'Campinas',
-        estado: 'SP',
-        cadastro: '11/23/2002',
-        categoria: 'Mercado',
-        agencia: '2674',
-        conta: '567294',
-        ativo: true
-    },
-    {
-        _id: 2,
-        nomeFantasia: 'Segundo',
-        razaoSocial: 'Segundo LTDA.',
-        cnpj: '823.706.030/0002-28',
-        email: 'atendimento@segundo.com',
-        telefone: '(11) 9.7523-6490',
-        endereco: 'Rua 2, 002, Centro',
-        cidade: 'Belo Horizonte',
-        estado: 'MG',
-        cadastro: '03/30/1991',
-        categoria: 'Posto',
-        agencia: '2234',
-        conta: '567434',
-        ativo: false
-    },
-    {
-        _id: 3,
-        nomeFantasia: 'Terceiro',
-        razaoSocial: 'Terceiro LTDA.',
-        cnpj: '397.726.139/0001-87',
-        email: 'atendimento@terceiro.com',
-        telefone: '(21) 3523-6490',
-        endereco: 'Rua 3, 003, Guanabara',
-        cidade: 'Rio de Janeiro',
-        estado: 'RJ',
-        cadastro: '06/23/1988',
-        categoria: 'Borracharia',
-        agencia: '5624',
-        conta: '434902',
-        ativo: true
-    }
-]
-
 const Estabelecimentos = props => {
+    const history = useHistory();
+    const [estabelecimentos, setEstabelecimentos] = useState([]);
+
+    useEffect(() => {
+        axios.get('/estabelecimentos')
+        .then(response => {
+            const { data } = response;
+
+            if (data[0].id) {
+                const estabelecimentoArray = [];
+                
+                data.forEach(item => {
+                    estabelecimentoArray.push({
+                        _id: item.id,
+                        nomeFantasia: item.nome_fantasia,
+                        cnpj: cnpjUtils.mask(item.cnpj),
+                        telefone: mask.telefone(item.telefone),
+                        cidade: item.cidade,
+                        estado: item.estado,
+                        ativo: item.status
+                    })
+                });
+                setEstabelecimentos(estabelecimentoArray);
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }, []);
+
+    const handleAddClick = () => {
+        history.push('/estabelecimento');
+    }
+
     return (
         
         <div className="container">
             <span className="h2">Estabelecimentos</span>
 
-            <a href="#" className="float-right text-success" data-toggle="tooltip" data-placement="left" title="Adicionar">
+            <button
+                className="btn btn-link float-right text-success" 
+                data-toggle="tooltip" 
+                data-placement="left" 
+                title="Adicionar"
+                onClick={() => handleAddClick()}
+            >
                 <Octicon icon={Plus} size='medium' />
-            </a>
+            </button>
 
             <div className="row-c mt-2">
                 <div className="col-c span1of2">
@@ -75,25 +68,28 @@ const Estabelecimentos = props => {
                 </div>
             </div>
 
-            <ul className="mt-3">
-                {
-                    estabelecimentos.map((estabelecimento, i) => {
-                        return <li key={estabelecimento._id}>
-                            <EstabelecimentoListItem
-                                fantasia={estabelecimento.nomeFantasia}
-                                ativo={estabelecimento.ativo}
-                                cnpj={estabelecimento.cnpj}
-                                telefone={estabelecimento.telefone}
-                                cidade={estabelecimento.cidade}
-                                estado={estabelecimento.estado}
-                            />
-                            { i !== estabelecimentos.length - 1 ?
-                                <hr/> : ''
-                            }
-                        </li>
-                    })
-                }
-            </ul>
+            { estabelecimentos[0] ?
+                <ul className="mt-3">
+                    {
+                        estabelecimentos.map((estabelecimento, i) => {
+                            return <li key={estabelecimento._id}>
+                                <EstabelecimentoListItem
+                                    _id={estabelecimento._id}
+                                    fantasia={estabelecimento.nomeFantasia}
+                                    ativo={estabelecimento.ativo}
+                                    cnpj={estabelecimento.cnpj}
+                                    telefone={estabelecimento.telefone}
+                                    cidade={estabelecimento.cidade}
+                                    estado={estabelecimento.estado}
+                                />
+                                { i !== estabelecimentos.length - 1 ?
+                                    <hr/> : ''
+                                }
+                            </li>
+                        })
+                    }
+                </ul>
+            : <h3 className="mt-5 text-center">Nenhum estabelecimento encontrado</h3> }
         </div>
     );
 }
