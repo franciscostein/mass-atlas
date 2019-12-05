@@ -44,7 +44,7 @@ class Estabelecimento {
     }
 
     findAll(callback) { // Implementar paginação
-        sql.query('SELECT * FROM estabelecimentos', (error, results) => {
+        sql.query('SELECT * FROM estabelecimentos e JOIN categorias c ON e.categoria = c.id', (error, results) => {
             if (error) {
                 callback(error, null);
             } else {

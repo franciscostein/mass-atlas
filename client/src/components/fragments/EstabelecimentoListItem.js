@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 import Octicon, { Trashcan } from '@primer/octicons-react';
 
 import DeleteConfirmation from '../fragments/DeleteConfirmation';
@@ -9,6 +9,17 @@ const EstabelecimentoListItem = props => {
 
     const handleRemoveClick = () => {
         setShowDeleteModal(true);
+    }
+
+    const handleDeletion = () => {
+        axios.delete(`/estabelecimentos/${props._id}`)
+        .then(response => {
+            setShowDeleteModal(false);
+            window.location.reload();
+        })
+        .catch(error => {
+            console.log(error)
+        });
     }
 
     return (
@@ -28,7 +39,7 @@ const EstabelecimentoListItem = props => {
                     <span className="float-right pr-2">{props.telefone}</span>
                 </div>
                 <div className="row-c pt-2">
-                    <span className="pl-2">{`${props.cidade} - ${props.estado}`}</span>
+                    <span className="pl-2">{`${props.categoria} | ${props.cidade} - ${props.estado}`}</span>
                     <button 
                         className="btn btn-link float-right text-danger" 
                         data-toggle="tooltip"
@@ -42,7 +53,11 @@ const EstabelecimentoListItem = props => {
             </div>
 
             { showDeleteModal ?
-                <DeleteConfirmation />
+                <DeleteConfirmation 
+                    nome={props.fantasia}
+                    onClose={() => setShowDeleteModal(false)}
+                    onDelete={() => handleDeletion()}
+                />
             : '' }
         </Fragment>
     );

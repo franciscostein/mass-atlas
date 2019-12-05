@@ -1,26 +1,29 @@
 import React from 'react';
+import Modal from 'react-bootstrap4-modal';
 
 const DeleteConfirmation = props => {
     return (
-        <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered" role="document">
-                <div className="modal-content">
-                <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div className="modal-body">
-                    ...
-                </div>
-                <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" className="btn btn-primary">Save changes</button>
-                </div>
-                </div>
+        <Modal
+            dialogClassName="modal-dialog-centered"
+            visible={true}
+            fade={true}
+            onClickBackdrop={() => props.onClose()}
+        >
+            <div className="modal-header">
+                <h5 className="modal-title">Remover {props.nome}?</h5>
             </div>
-        </div>
+            <div className="modal-body">
+                <p>Essa ação não poderá ser desfeita.</p>
+            </div>
+            <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={() => props.onClose()}>
+                    Não
+                </button>
+                <button type="button" className="btn btn-primary" onClick={() => props.onDelete()}>
+                    Sim
+                </button>
+            </div>
+        </Modal>
     );
 }
 

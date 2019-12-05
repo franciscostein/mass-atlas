@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import Octicon, { Plus, Search } from '@primer/octicons-react';
+import Octicon, { Plus, Search, X } from '@primer/octicons-react';
 import cnpjUtils from 'node-cnpj';
 
 import mask from '../../utils/mask';
@@ -27,7 +27,8 @@ const Estabelecimentos = props => {
                         telefone: mask.telefone(item.telefone),
                         cidade: item.cidade,
                         estado: item.estado,
-                        ativo: item.status
+                        ativo: item.status,
+                        categoria: item.categoria
                     })
                 });
                 setEstabelecimentos(estabelecimentoArray);
@@ -58,11 +59,14 @@ const Estabelecimentos = props => {
             </button>
 
             <div className="row-c mt-2">
-                <div className="col-c span1of2">
+                <div className="col-c span2of3">
                     <div className="input-group">
                         <input type="text" className="form-control" placeholder="Pesquisar"/>
                         <div className="input-group-append">
                             <button className="input-group-text"><Octicon icon={Search} size='small' /></button>
+                        </div>
+                        <div className="input-group-append">
+                            <button className="input-group-text"><Octicon icon={X} size='small' /></button>
                         </div>
                     </div>
                 </div>
@@ -81,6 +85,7 @@ const Estabelecimentos = props => {
                                     telefone={estabelecimento.telefone}
                                     cidade={estabelecimento.cidade}
                                     estado={estabelecimento.estado}
+                                    categoria={estabelecimento.categoria}
                                 />
                                 { i !== estabelecimentos.length - 1 ?
                                     <hr/> : ''
