@@ -16,10 +16,10 @@ test('Criar estabelecimento', async () => {
     const response = await request(app)
         .post('/estabelecimentos')
         .send({
-            razao_social: 'Ryan e Isis Assessoria Jurídica Ltda',
-            nome_fantasia: 'Ryan e Isis',
+            razao_social: 'Ryan e Sophia Assessoria Jurídica Ltda',
+            nome_fantasia: 'Ryan e Sophia',
             cnpj: '52998350000192',
-            email: 'atendimento@ryaneisis.com.br',
+            email: 'atendimento@ryanesophia.com.br',
             endereco: 'Rua Teotônio Vilela, 836, Jardim Itamaracá',
             cidade: 'Indaiatuba',
             estado: 'SP',
@@ -40,7 +40,7 @@ test('Não inserir registro duplicado', async () => {
     await request(app)
         .post('/estabelecimentos')
         .send({
-            razao_social: 'Ryan e Isis Assessoria Jurídica Ltda',
+            razao_social: 'Ryan e Sophia Assessoria Jurídica Ltda',
             cnpj: '52998350000192',
         })
         .expect(400);
@@ -50,7 +50,7 @@ test('Não inserir com valores inválidos', async () => {
     let response = await request(app)
         .post('/estabelecimentos')
         .send({
-            razao_social: 'Ryan e Isis Assessoria Jurídica Ltda',
+            razao_social: 'Ryan e Sophia Assessoria Jurídica Ltda',
             cnpj: '321',
         })
         .expect(400);
@@ -73,10 +73,10 @@ test('Buscar estabelecimento por ID', async () => {
     const estabelecimento = response.body;
 
     expect(estabelecimento.id).toBe(insertedId);
-    expect(estabelecimento.razao_social).toEqual('Ryan e Isis Assessoria Jurídica Ltda');
-    expect(estabelecimento.nome_fantasia).toBe('Ryan e Isis');
+    expect(estabelecimento.razao_social).toEqual('Ryan e Sophia Assessoria Jurídica Ltda');
+    expect(estabelecimento.nome_fantasia).toBe('Ryan e Sophia');
     expect(estabelecimento.cnpj).toBe('52998350000192');
-    expect(estabelecimento.email).toBe('atendimento@ryaneisis.com.br');
+    expect(estabelecimento.email).toBe('atendimento@ryanesophia.com.br');
     expect(estabelecimento.endereco).toBe('Rua Teotônio Vilela, 836, Jardim Itamaracá');
     expect(estabelecimento.cidade).toBe('Indaiatuba');
     expect(estabelecimento.estado).toBe('SP');
@@ -102,6 +102,12 @@ test('Inserir novo estabelecimento apenas com campos obrigatórios', async () =>
         .expect(201);
 
     expect(response.body.insertedId).not.toBeNull()
+});
+
+test('Pesquisar estabelecimento', async () => {
+    const response = await request(app).get('/estabelecimentos?search=Sophia').expect(200);
+
+    expect(response.body.length).toBe(1);
 });
 
 test('Buscar todos os registros', async () => {

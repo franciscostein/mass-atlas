@@ -41,21 +41,34 @@ const getOne = async (_id, result) => {
     });
 }
 
-const getMany = async result => {
-    // PAGINAÇÃO
+const getMany = async (query, result) => {
     const estabelecimento = new Estabelecimento();
 
-    estabelecimento.findAll((error, results) => {
+    if (query) {
+        estabelecimento.search(query, (error, results) => {
 
-        if (error) {
-            result(500, 'Erro ao buscar registro', null);
-        }
-        if (results.length !== 0) {
-            result(200, null, results);
-        } else {
-            result(204, null, null);
-        }
-    });
+            if (error) {
+                result(500, 'Erro ao pesquisar registros', null);
+            }
+            if (results.length !== 0) {
+                result(200, null, results);
+            } else {
+                result(204, null, null);
+            }
+        });
+    } else {
+        estabelecimento.findAll((error, results) => {
+
+            if (error) {
+                result(500, 'Erro ao buscar registros', null);
+            }
+            if (results.length !== 0) {
+                result(200, null, results);
+            } else {
+                result(204, null, null);
+            }
+        });
+    }
 }
 
 const update = async (_id, data, result) => {

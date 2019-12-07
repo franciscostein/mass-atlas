@@ -18,7 +18,7 @@ const Estabelecimentos = props => {
 
             if (data[0].id) {
                 const estabelecimentoArray = [];
-                
+
                 data.forEach(item => {
                     estabelecimentoArray.push({
                         _id: item.id,

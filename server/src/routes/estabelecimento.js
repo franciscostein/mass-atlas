@@ -24,9 +24,11 @@ router.get('/estabelecimentos/:id', async (req, res) => {
 });
 
 // Read many
+// Search: ?search={query}
 router.get('/estabelecimentos', async (req, res) => {
-    // implemenar paginação
-    await controller.getMany((code, message, estabelecimentos) => {
+    const query = req.query.search;
+
+    await controller.getMany(query, (code, message, estabelecimentos) => {
 
         if (code === 200) {
             return res.status(code).send(estabelecimentos);

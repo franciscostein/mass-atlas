@@ -25,9 +25,9 @@ const preSave = estabelecimento => {
         validation.code = 400;
         validation.error.push({ field: 'cnpj', message: 'CNPJ é obritatório' });
     } else {
-        if (cnpj.length > 14)  {
+        if (cnpj.length !== 14)  {
             validation.code = 400;
-            validation.error.push({ field: 'cnpj', message: 'CNPJ deve ter até 14 caracteres' });
+            validation.error.push({ field: 'cnpj', message: 'CNPJ deve conter 14 caracteres' });
         }
     }
 
@@ -60,27 +60,27 @@ const preSave = estabelecimento => {
     }
 
     // Estado
-    if (estado && estado.length > 2) {
+    if (estado && estado.length !== 2) {
         validation.code = 400;
-        validation.error.push({ field: 'estado', message: 'Estado deve ter até 2 caracteres'});
+        validation.error.push({ field: 'estado', message: 'Estado deve conter 2 caracteres'});
     }
 
     // Telefone
-    if (telefone && telefone.length > 15) {
+    if (telefone && (telefone.length > 11 || telefone.length < 10)) {
         validation.code = 400;
-        validation.error.push({ field: 'telefone', message: 'Telefone deve ter até 15 caracteres' });
+        validation.error.push({ field: 'telefone', message: 'Telefone deve ter entre 10 e 11 caracteres' });
     }
 
     // Agencia
-    if (agencia && agencia.length > 5) {
+    if (agencia && agencia.length !== 4) {
         validation.code = 400;
-        validation.error.push({ field: 'agencia', message: 'Agencia deve ter até 5 caracteres' });
+        validation.error.push({ field: 'agencia', message: 'Agencia deve conter 4 caracteres' });
     }
 
     // Conta
-    if (conta && conta.length > 8) {
+    if (conta && conta.length !== 6) {
         validation.code = 400;
-        validation.error.push({ field: 'conta', message: 'Conta deve ter até 8 caracteres' });
+        validation.error.push({ field: 'conta', message: 'Conta deve conter 6 caracteres' });
     }
     return validation;
 }
