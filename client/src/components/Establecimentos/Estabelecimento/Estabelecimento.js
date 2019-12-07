@@ -3,7 +3,10 @@ import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import cnpjUtils from 'node-cnpj';
 
+import validation from '../../../utils/validation';
+import date from '../../../utils/date';
 import mask from '../../../utils/mask';
+import unMask from '../../../utils/unMask';
 import Input from '../../fragments/Inputs/Input';
 import InputCNPJ from '../../fragments/Inputs/InputCNPJ';
 import InputTelefone from '../../fragments/Inputs/InputTelefone';
@@ -30,6 +33,12 @@ const Estabelecimento = props => {
     const [categoria, setCategoria] = useState(0);
     const [agencia, setAgencia] = useState('');
     const [conta, setConta] = useState('');
+    const [cnpjValidationMsg, setCnpjValidationMsg] = useState('');
+    const [emailValidationMsg, setEmailValidationMsg] = useState('');
+    const [telefoneValidationMsg, setTelefoneValidationMsg] = useState('');
+    const [cadastroValidationMsg, setCadastroValidationMsg] = useState('');
+    const [agenciaValidationMsg, setAgenciaValidationMsg] = useState('');
+    const [contaValidationMsg, setContaValidationMsg] = useState('');
 
     useEffect(() => {
         if (id) {
@@ -64,7 +73,33 @@ const Estabelecimento = props => {
     const handleSubmit = event => {
         event.preventDefault();
 
-        console.log('Submited');
+        const validationRes = validation.preSave({ 
+            cnpj: cnpjUtils.unMask(cnpj), 
+            email, 
+            telefone: unMask(telefone), 
+            cadastro: date.format(cadastro), 
+            categoria, 
+            agencia: unMask(agencia), 
+            conta: unMask(conta)
+        });
+
+        if (!validationRes) {
+
+        } else {
+            if (validationRes.field === 'cnpj') {
+                setCnpjValidationMsg(validationRes.message);
+            } else if (validationRes.field === 'email') {
+                setEmailValidationMsg(validationRes.message);
+            } else if (validationRes.field === 'telefone') {
+                setTelefoneValidationMsg(validationRes.message);
+            } else if (validationRes.field === 'cadastro') {
+                setCadastroValidationMsg(validationRes.message);
+            } else if (validationRes.field === 'agencia') {
+                setAgenciaValidationMsg(validationRes.message);
+            } else if (validationRes.field === 'conta') {
+                setContaValidationMsg(validationRes.message);
+            }
+        }
     }
 
     const handleCancelarClick = () => {
@@ -123,7 +158,7 @@ const Estabelecimento = props => {
                         inputId="inputCnpj"
                         label="CNPJ"Telefone
                         maxLength={18}
-                        invalidMessage={'Inválido'}
+                        invalidMessage={cnpjValidationMsg}
                         required={true}
                         value={cnpj}
                         onChange={value => setCnpj(value)}
@@ -134,7 +169,7 @@ const Estabelecimento = props => {
                         label="E-mail"
                         type="email"
                         maxLength={45}
-                        invalidMessage={'Inválido'}
+                        invalidMessage={emailValidationMsg}
                         required={false}
                         value={email}
                         onChange={value => setEmail(value)}
@@ -144,9 +179,8 @@ const Estabelecimento = props => {
                         inputId="inputTelefone"
                         label="Telefone"
                         type="text"
-                        invalidMessage={'Inválido'}
+                        invalidMessage={telefoneValidationMsg}
                         required={categoria === 1}  // Categoria 1 - Supermercado = telefone obrigatório
-                        isCelular={telefone.length === 15}
                         value={telefone}
                         onChange={value => setTelefone(value)}
                     />
@@ -187,7 +221,7 @@ const Estabelecimento = props => {
                             inputId="dateCadastro"
                             label="Cadastro"
                             type="text"
-                            invalidMessage={'Inválido'}
+                            invalidMessage={cadastroValidationMsg}
                             required={false}
                             value={cadastro}
                             onChange={value => setCadastro(value)}
@@ -207,7 +241,7 @@ const Estabelecimento = props => {
                             label="Agência"
                             type="text"
                             maxLength={4}
-                            invalidMessage={'Inválido'}
+                            invalidMessage={agenciaValidationMsg}
                             required={false}
                             value={agencia}
                             onChange={value => setAgencia(value)}
@@ -218,7 +252,7 @@ const Estabelecimento = props => {
                             label="Conta"
                             type="text"
                             maxLength={6}
-                            invalidMessage={'Inválido'}
+                            invalidMessage={contaValidationMsg}
                             required={false}
                             value={conta}
                             onChange={value => setConta(value)}

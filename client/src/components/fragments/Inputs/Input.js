@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const Input = props => {
+
+    useEffect(() => { console.log('rerendered') }, [props.invalidMessage]);
+
     return (
         <div className={`col-c ${props.span}`}>
             <div className="form-group">
