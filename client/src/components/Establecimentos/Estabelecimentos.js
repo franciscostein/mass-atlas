@@ -10,13 +10,24 @@ import EstabelecimentoListItem from '../fragments/EstabelecimentoListItem';
 const Estabelecimentos = props => {
     const history = useHistory();
     const [estabelecimentos, setEstabelecimentos] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
-        axios.get('/estabelecimentos')
+        fetchData();
+    }, []);
+
+    const fetchData = query => {
+        let url = '/estabelecimentos';
+
+        if (query) {
+            url = `/estabelecimentos?search=${query}`;
+        }
+
+        axios.get(url)
         .then(response => {
             const { data } = response;
 
-            if (data[0].id) {
+            if (data.length > 0) {
                 const estabelecimentoArray = [];
 
                 data.forEach(item => {
@@ -37,14 +48,24 @@ const Estabelecimentos = props => {
         .catch(error => {
             console.log(error);
         });
-    }, []);
+    }
 
     const handleAddClick = () => {
         history.push('/estabelecimento');
     }
 
+    const handleSearchInputKeyDown = event => {
+        if (event.key === 'Enter') {
+            fetchData(searchQuery);
+        }
+    }
+
+    const handleClearClick = () => {
+        fetchData();
+        setSearchQuery('');
+    }
+
     return (
-        
         <div className="container">
             <span className="h2">Estabelecimentos</span>
 
@@ -61,12 +82,29 @@ const Estabelecimentos = props => {
             <div className="row-c mt-2">
                 <div className="col-c span2of3">
                     <div className="input-group">
-                        <input type="text" className="form-control" placeholder="Pesquisar"/>
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            placeholder="Pesquisar"
+                            value={searchQuery}
+                            onChange={event => setSearchQuery(event.target.value)}
+                            onKeyDown={event => handleSearchInputKeyDown(event)}
+                        />
                         <div className="input-group-append">
-                            <button className="input-group-text"><Octicon icon={Search} size='small' /></button>
+                            <button 
+                                className="input-group-text"
+                                onClick={() => fetchData(searchQuery)}
+                            >
+                                <Octicon icon={Search} size='small' />
+                            </button>
                         </div>
                         <div className="input-group-append">
-                            <button className="input-group-text"><Octicon icon={X} size='small' /></button>
+                            <button 
+                                className="input-group-text"
+                                onClick={() => handleClearClick()}
+                            >
+                                <Octicon icon={X} size='small' />
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -51,7 +51,7 @@ test('Não inserir com valores inválidos', async () => {
         .post('/estabelecimentos')
         .send({
             razao_social: 'Ryan e Sophia Assessoria Jurídica Ltda',
-            cnpj: '321',
+            cnpj: '32145678901232',
         })
         .expect(400);
 
@@ -108,6 +108,7 @@ test('Pesquisar estabelecimento', async () => {
     const response = await request(app).get('/estabelecimentos?search=Sophia').expect(200);
 
     expect(response.body.length).toBe(1);
+    expect(response.body[0].cnpj).toBe('52998350000192');
 });
 
 test('Buscar todos os registros', async () => {

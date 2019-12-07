@@ -61,8 +61,14 @@ const Estabelecimento = props => {
         }
     }, []);
 
+    const handleSubmit = event => {
+        event.preventDefault();
+
+        console.log('Submited');
+    }
+
     const handleCancelarClick = () => {
-        history.goBack();
+        history.push('/estabelecimentos');
     }
 
     return (
@@ -72,7 +78,7 @@ const Estabelecimento = props => {
                     <span className="badge badge-primary">Novo</span> 
                 : '' } {title}
             </h2>
-            <form className="container needs-validation mt-4">
+            <form className="container needs-validation mt-4" onSubmit={event => handleSubmit(event)}>
                 <div className="row-c mb-4">
                     <div className="custom-control custom-switch">
                         <input 
@@ -80,7 +86,7 @@ const Estabelecimento = props => {
                             className="custom-control-input" 
                             id="switchAtivo"
                             checked={status ? 'checked' : ''}
-                            onChange={event => setStatus(event.target.value)}
+                            onChange={() => setStatus(!status)}
                         />
                         <label className="custom-control-label" htmlFor="switchAtivo">Ativo</label>
                     </div>
@@ -139,7 +145,7 @@ const Estabelecimento = props => {
                         label="Telefone"
                         type="text"
                         invalidMessage={'Inválido'}
-                        required={false}
+                        required={categoria === 1}  // Categoria 1 - Supermercado = telefone obrigatório
                         isCelular={telefone.length === 15}
                         value={telefone}
                         onChange={value => setTelefone(value)}
@@ -222,7 +228,12 @@ const Estabelecimento = props => {
                 <div className="row-c mt-2">
                     <div className="col-c span1of2">
                         <div className="form-group float-right">
-                            <button type="submit" className="btn btn-primary">Salvar</button>
+                            <button 
+                                type="submit" 
+                                className="btn btn-primary"
+                            >
+                                Salvar
+                            </button>
                         </div>
                     </div>
                     <div className="col-c span1of2">

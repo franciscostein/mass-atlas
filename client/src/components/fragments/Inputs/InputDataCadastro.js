@@ -11,7 +11,7 @@ const InputDataCadastro = props => {
                     {props.label}
                 </label>
                 <MaskedInput
-                    mask={[/[0-9]/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]}
+                    mask={[/[0-9]/, /\d/, '/', /[0-1]/, /\d/, '/', /[1-2]/, /\d/, /\d/, /\d/]}
                     placeholder="__/__/____"
                     type={props.type} 
                     className="form-control" 
