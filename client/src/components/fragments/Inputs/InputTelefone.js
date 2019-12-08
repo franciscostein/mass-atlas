@@ -23,9 +23,7 @@ const InputTelefone = props => {
     return (
         <div className={`col-c ${props.span}`}>
             <div className="form-group">
-                <label 
-                    htmlFor={props.inputId}
-                >
+                <label className="form-control-label" htmlFor={props.inputId}>
                     {props.label}
                 </label>
                 <MaskedInput
@@ -33,15 +31,13 @@ const InputTelefone = props => {
                     guide={true}
                     placeholder="(__) ____-____"
                     type={props.type} 
-                    className="form-control" 
+                    className={`form-control ${props.invalidMessage ? 'is-invalid' : ''}`}
                     id={props.inputId}
                     required={ props.required ? 'required' : '' }
                     value={props.value}
                     onChange={event => props.onChange(event.target.value)}
                 />
-                <div 
-                    className="invalid-feedback"
-                >
+                <div className="invalid-feedback">
                     {props.invalidMessage}
                 </div>
             </div>

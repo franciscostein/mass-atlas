@@ -1,28 +1,24 @@
 import React from 'react';
 import MaskedInput from 'react-text-mask';
 
-const InputAgencia = props => {
+const InputCNPJ = props => {
     return (
         <div className={`col-c ${props.span}`}>
             <div className="form-group">
-                <label 
-                    htmlFor={props.inputId}
-                >
+                <label className="form-control-label" htmlFor={props.inputId}>
                     {props.label}
                 </label>
                 <MaskedInput
                     mask={[/[0-9]/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/]}
                     placeholder="__.___.___/____-__"
                     type={props.type} 
-                    className="form-control" 
+                    className={`form-control ${props.invalidMessage ? 'is-invalid' : ''}`}
                     id={props.inputId}
                     required={ props.required ? 'required' : '' }
                     value={props.value}
                     onChange={event => props.onChange(event.target.value)}
                 />
-                <div 
-                    className="invalid-feedback"
-                >
+                <div className="invalid-feedback">
                     {props.invalidMessage}
                 </div>
             </div>
@@ -30,4 +26,4 @@ const InputAgencia = props => {
     );
 }
 
-export default InputAgencia;
+export default InputCNPJ;

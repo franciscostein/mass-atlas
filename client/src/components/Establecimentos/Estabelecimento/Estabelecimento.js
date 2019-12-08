@@ -70,11 +70,15 @@ const Estabelecimento = props => {
         }
     }, []);
 
+    const save = () => {
+
+    }
+
     const handleSubmit = event => {
         event.preventDefault();
 
         const validationRes = validation.preSave({ 
-            cnpj: cnpjUtils.unMask(cnpj), 
+            cnpj: unMask(cnpj), 
             email, 
             telefone: unMask(telefone), 
             cadastro: date.format(cadastro), 
@@ -84,21 +88,28 @@ const Estabelecimento = props => {
         });
 
         if (!validationRes) {
-
+            save();
         } else {
-            if (validationRes.field === 'cnpj') {
-                setCnpjValidationMsg(validationRes.message);
-            } else if (validationRes.field === 'email') {
-                setEmailValidationMsg(validationRes.message);
-            } else if (validationRes.field === 'telefone') {
-                setTelefoneValidationMsg(validationRes.message);
-            } else if (validationRes.field === 'cadastro') {
-                setCadastroValidationMsg(validationRes.message);
-            } else if (validationRes.field === 'agencia') {
-                setAgenciaValidationMsg(validationRes.message);
-            } else if (validationRes.field === 'conta') {
-                setContaValidationMsg(validationRes.message);
-            }
+            validationRes.forEach(val => {
+                if (val.field === 'cnpj') {
+                    setCnpjValidationMsg(val.message);
+                }
+                if (val.field === 'email') {
+                    setEmailValidationMsg(val.message);
+                }
+                if (val.field === 'telefone') {
+                    setTelefoneValidationMsg(val.message);
+                }
+                if (val.field === 'cadastro') {
+                    setCadastroValidationMsg(val.message);
+                }
+                if (val.field === 'agencia') {
+                    setAgenciaValidationMsg(val.message);
+                }
+                if (val.field === 'conta') {
+                    setContaValidationMsg(val.message);
+                }
+            });
         }
     }
 
@@ -133,7 +144,6 @@ const Estabelecimento = props => {
                         label="Nome fantasia"
                         type="text"
                         maxLength={60}
-                        invalidMessage={'Inválido'}
                         required={false}
                         value={fantasia}
                         onChange={value => setFantasia(value)}
@@ -146,7 +156,6 @@ const Estabelecimento = props => {
                         label="Razão social"
                         type="text"
                         maxLength={80}
-                        invalidMessage={'Inválido'}
                         required={true}
                         value={razaoSocial}
                         onChange={value => setRazaoSocial(value)}
@@ -192,7 +201,6 @@ const Estabelecimento = props => {
                         label="Endereço"
                         type="text"
                         maxLength={60}
-                        invalidMessage={'Inválido'}
                         required={false}
                         value={endereco}
                         onChange={value => setEndereco(value)}
@@ -203,7 +211,6 @@ const Estabelecimento = props => {
                         label="Cidade"
                         type="text"
                         maxLength={32}
-                        invalidMessage={'Inválido'}
                         required={false}
                         value={cidade}
                         onChange={value => setCidade(value)}

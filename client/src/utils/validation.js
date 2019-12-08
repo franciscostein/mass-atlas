@@ -1,42 +1,40 @@
 import emailValidator from 'email-validator';
 import cnpjValidator from 'node-cnpj';
-import dateValidator from 'moment';
+import moment from 'moment';
 
 const validation = {
 
     preSave: estabelecimento => {
+        const result = [];
         const { cnpj, email, telefone, cadastro, categoria, agencia, conta } = estabelecimento;
 
-        if (cnpj.length !== 14) {
-            return { field: 'cnpj', message: 'Deve conter 14 caracteres' }
-        }
         if (!cnpjValidator.validate(cnpj)) {
-            return { field: 'cnpj', message: 'Inválido' }
+            result.push({ field: 'cnpj', message: 'CNPJ inválido' });
         }
 
-        if (!emailValidator.validate(email)) {
-            return { field: 'email', message: 'Inválido' }
+        if (email && !emailValidator.validate(email)) {
+            result.push({ field: 'email', message: 'E-mail inválido' });
         }
 
-        if (telefone.length < 10 || telefone.length > 11) {
-            return { field: 'telefone', message: 'Somente 10 ou 11 caracteres' }
+        if (telefone && (telefone.length < 10 || telefone.length > 11)) {
+            result.push({ field: 'telefone', message: 'Número incompleto' });
         }
 
-        if (!dateValidator.isValid(cadastro)) {
-            return { field: 'cadastro', message: 'Inválido' }
+        if (cadastro && !moment(cadastro).isValid()) {
+            result.push({ field: 'cadastro', message: 'Data inválida' });
+        }
+        
+        if (categoria == 1 && !telefone) {  // 1 - Supermercado = telefone obrigatório
+            result.push({ field: 'telefone', message: 'Obrigatório para Supermercados' });
         }
 
-        if (categoria === 1 && (telefone.length < 10 || telefone.length > 11)) {  // 1 - Supermercado = telefone obrigatório
-            return { field: 'telefone', message: 'Obrigatório para Supermercados' }
+        if (agencia && agencia.length !== 4) {
+            result.push({ field: 'agencia', message: 'Deve conter 4 caracteres' });
         }
-
-        if (agencia.length !== 4) {
-            return { field: 'agencia', message: 'Deve conter 4 caracteres' }
+        if (conta && conta.length !== 6) {
+            result.push({ field: 'conta', message: 'Deve conter 6 caracteres' });
         }
-        if (conta.length !== 6) {
-            return { field: 'conta', message: 'Deve conter 6 caracteres' }
-        }
-        return null;
+        return result;
     }
 }
 
