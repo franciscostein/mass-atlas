@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import axios from 'axios';
 import Octicon, { Trashcan } from '@primer/octicons-react';
 
-import DeleteConfirmation from '../fragments/DeleteConfirmation';
+import DeleteConfirmation from '../fragments/Modals/DeleteConfirmation';
 
 const EstabelecimentoListItem = props => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);

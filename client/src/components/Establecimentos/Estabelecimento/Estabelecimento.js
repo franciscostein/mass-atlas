@@ -15,6 +15,7 @@ import InputDataCadastro from '../../fragments/Inputs/InputDataCadastro';
 import SelectCategoria from '../../fragments/Selects/SelectCategoria';
 import InputAgencia from '../../fragments/Inputs/InputAgencia';
 import InputConta from '../../fragments/Inputs/InputConta';
+import FeedbackMessage from '../../fragments/Modals/FeedbackMessage';
 
 const Estabelecimento = props => {
     const { id } = useParams();
@@ -39,6 +40,8 @@ const Estabelecimento = props => {
     const [cadastroValidationMsg, setCadastroValidationMsg] = useState('');
     const [agenciaValidationMsg, setAgenciaValidationMsg] = useState('');
     const [contaValidationMsg, setContaValidationMsg] = useState('');
+    const [showSuccessMessage, setShowSucessMessage] = useState(false);
+    const [showFailureMessage, setShowFailureMessage] = useState(false);
 
     useEffect(() => {
         if (id) {
@@ -77,18 +80,20 @@ const Estabelecimento = props => {
 
             axios.patch(`/estabelecimentos/${id}`, estabelecimento)
             .then(response => {
-                window.location.reload();
+                setShowSucessMessage(true);
             })
             .catch(error => {
+                setShowFailureMessage(true);
                 console.log(error);
             })
         } else {    // insert
 
             axios.post('/estabelecimentos', estabelecimento)
             .then(response => {
-                history.push('/estabelecimentos');
+                setShowSucessMessage(true);
             })
             .catch(error => {
+                setShowFailureMessage(true);
                 console.log(error);
             })
         }
@@ -110,7 +115,6 @@ const Estabelecimento = props => {
             agencia: unMask(agencia),
             conta: unMask(conta)
         }
-
         for (let propName in estabelecimento) { 
             if (estabelecimento[propName] === null || estabelecimento[propName] === undefined || estabelecimento[propName] === '') {
                 delete estabelecimento[propName];
@@ -160,6 +164,15 @@ const Estabelecimento = props => {
 
     const handleCancelarClick = () => {
         history.push('/estabelecimentos');
+    }
+
+    const handleSuccessMessageClose = () => {
+        setShowSucessMessage(false);
+        history.push('/estabelecimentos');
+    }
+
+    const handleFailureMessageClose = () => {
+        setShowFailureMessage(false);
     }
 
     return (
@@ -335,6 +348,24 @@ const Estabelecimento = props => {
                     </div>
                 </div>
             </form>
+
+            { showSuccessMessage ?
+                <FeedbackMessage
+                    title="Sucesso"
+                    message="Registro salvo com sucesso."
+                    success={true}
+                    onClose={() => handleSuccessMessageClose(false)}
+                />
+            : '' }
+
+            { showFailureMessage ?
+                <FeedbackMessage
+                    title="Erro"
+                    message="Erro ao salvar registro, verifique as informações e tente novamente."
+                    success={false}
+                    onClose={() => handleFailureMessageClose(false)}
+                />
+            : '' }
        </div>
     );
 }
