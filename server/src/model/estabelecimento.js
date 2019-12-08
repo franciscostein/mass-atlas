@@ -44,7 +44,7 @@ class Estabelecimento {
     }
 
     findAll(callback) {
-        sql.query('SELECT e.id, e.razao_social, e.nome_fantasia, e.cnpj, e.email, e.endereco, e.cidade, e.estado, e.telefone, e.data_cadastro, c.categoria, e.status, e.agencia, e.conta FROM estabelecimentos e JOIN categorias c ON e.categoria = c.id', (error, results) => {
+        sql.query('SELECT e.id, e.razao_social, e.nome_fantasia, e.cnpj, e.email, e.endereco, e.cidade, e.estado, e.telefone, e.data_cadastro, c.categoria, e.status, e.agencia, e.conta FROM estabelecimentos e LEFT JOIN categorias c ON e.categoria = c.id', (error, results) => {
             if (error) {
                 callback(error, null);
             } else {

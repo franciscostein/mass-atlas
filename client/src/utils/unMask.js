@@ -1,6 +1,8 @@
 const unMask = value => {
-
-    return value.replace(/\D/g, '');
+    if (value) {
+        return value.replace(/\D/g, '');
+    }
+    return null;
 }
 
 export default unMask;

@@ -34,6 +34,7 @@ const Estabelecimentos = props => {
                     estabelecimentoArray.push({
                         _id: item.id,
                         nomeFantasia: item.nome_fantasia,
+                        razaoSocial: item.razao_social,
                         cnpj: cnpjUtils.mask(item.cnpj),
                         telefone: mask.telefone(item.telefone),
                         cidade: item.cidade,
@@ -118,6 +119,7 @@ const Estabelecimentos = props => {
                                 <EstabelecimentoListItem
                                     _id={estabelecimento._id}
                                     fantasia={estabelecimento.nomeFantasia}
+                                    razaoSocial={estabelecimento.razaoSocial}
                                     ativo={estabelecimento.ativo}
                                     cnpj={estabelecimento.cnpj}
                                     telefone={estabelecimento.telefone}

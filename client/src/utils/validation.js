@@ -24,7 +24,7 @@ const validation = {
             result.push({ field: 'cadastro', message: 'Data inválida' });
         }
         
-        if (categoria == 1 && !telefone) {  // 1 - Supermercado = telefone obrigatório
+        if (parseInt(categoria) === 1 && !telefone) {  // 1 - Supermercado = telefone obrigatório
             result.push({ field: 'telefone', message: 'Obrigatório para Supermercados' });
         }
 

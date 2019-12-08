@@ -30,7 +30,7 @@ const EstabelecimentoListItem = props => {
                         href={`/estabelecimento/${props._id}`}
                         className="h5"
                     >
-                        {props.fantasia}
+                        {props.fantasia ? props.fantasia : props.razaoSocial}
                     </a>
                     <span className={`float-right badge ${props.ativo ? 'badge-success' : 'badge-danger'}`}>{props.ativo ? 'Ativo' : 'Inativo'}</span>
                 </div>
@@ -39,7 +39,9 @@ const EstabelecimentoListItem = props => {
                     <span className="float-right pr-2">{props.telefone}</span>
                 </div>
                 <div className="row-c pt-2">
-                    <span className="pl-2">{`${props.categoria} | ${props.cidade} - ${props.estado}`}</span>
+                    <span className="pl-2">
+                        {`${props.categoria ? props.categoria + ' |' : ''} ${props.cidade ? props.cidade : ''} ${props.cidade && props.estado ? '-' : ''} ${props.estado ? props.estado : ''}`}
+                    </span>
                     <button 
                         className="btn btn-link float-right text-danger" 
                         data-toggle="tooltip"

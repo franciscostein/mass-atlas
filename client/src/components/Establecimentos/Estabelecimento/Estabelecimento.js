@@ -47,7 +47,7 @@ const Estabelecimento = props => {
                 const { data } = response;
 
                 if (data.id) {
-                    setTitle(data.nome_fantasia);
+                    setTitle(data.nome_fantasia ? data.nome_fantasia : data.razao_social);
                     setFantasia(data.nome_fantasia);
                     setRazaoSocial(data.razao_social);
                     setCnpj(cnpjUtils.mask(data.cnpj));
@@ -68,10 +68,55 @@ const Estabelecimento = props => {
                 console.log(error);
             });
         }
-    }, []);
+    }, [id]);
 
     const save = () => {
+        const estabelecimento = createObject();
 
+        if (id) {   // edit
+
+            axios.patch(`/estabelecimentos/${id}`, estabelecimento)
+            .then(response => {
+                window.location.reload();
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        } else {    // insert
+
+            axios.post('/estabelecimentos', estabelecimento)
+            .then(response => {
+                history.push('/estabelecimentos');
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        }
+    }
+
+    const createObject = () => {
+        const estabelecimento = {
+            razao_social: razaoSocial,
+            nome_fantasia: fantasia,
+            cnpj: unMask(cnpj),
+            email,
+            endereco,
+            cidade,
+            estado,
+            telefone: unMask(telefone),
+            data_cadastro: date.format(cadastro),
+            categoria: categoria !== 0 ? categoria : null,
+            status,
+            agencia: unMask(agencia),
+            conta: unMask(conta)
+        }
+
+        for (let propName in estabelecimento) { 
+            if (estabelecimento[propName] === null || estabelecimento[propName] === undefined || estabelecimento[propName] === '') {
+                delete estabelecimento[propName];
+            }
+        }
+        return estabelecimento;
     }
 
     const handleSubmit = event => {
@@ -87,7 +132,7 @@ const Estabelecimento = props => {
             conta: unMask(conta)
         });
 
-        if (!validationRes) {
+        if (validationRes.length === 0) {
             save();
         } else {
             validationRes.forEach(val => {
