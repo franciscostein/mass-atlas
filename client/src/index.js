@@ -7,7 +7,7 @@ import './index.css';
 import './custom.scss'; // Bootstrap 4 with SASS
 
 // default global settings for Axios
-axios.defaults.baseURL = 'http://localhost:4000';   // back-end URL
+// axios.defaults.baseURL = 'http://localhost:4000';   // back-end URL
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 ReactDOM.render(<App />, document.getElementById('root'));

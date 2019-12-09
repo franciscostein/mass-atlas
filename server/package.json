@@ -6,7 +6,8 @@
 	"scripts": {
 		"start": "node src/index.js",
 		"dev": "env-cmd -f ./src/config/env/dev.env nodemon src/index.js",
-		"test": "env-cmd -f ./src/config/env/test.env jest --watch --runInBand --verbose=true"
+		"test": "env-cmd -f ./src/config/env/test.env jest --watch --runInBand --verbose=true",
+		"heroku-postbuild": "cd ../client && npm install & npm run build"
 	},
 	"jest": {
 		"testEnvironment": "node"
