@@ -1,2 +1,2 @@
-server/node_modules
-server/src/config/env/prd.env
+node_modules
+src/config/env/prd.env
